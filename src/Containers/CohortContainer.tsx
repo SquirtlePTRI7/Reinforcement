@@ -1,9 +1,19 @@
-import React from 'react'
+import React from 'react';
+
+import CohortStatsBlock from '../Components/CohortStatsBlock';
 
 const CohortContainer = () => {
-  return (
-    <div>CohortStatsContainer</div>
-  )
-}
+  const [allStats, setAllStats] = React.useState([]);
 
-export default CohortContainer
+  const getAllStats = () => {
+    // DATABASE REQUEST AND SETALLSTATS
+  }
+
+  return (
+    <div>
+      <CohortStatsBlock allStats={allStats} />
+    </div>
+  )
+};
+
+export default CohortContainer;

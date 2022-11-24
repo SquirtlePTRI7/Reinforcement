@@ -1,9 +1,17 @@
 import React from 'react'
 
-const CohortStatsBlock = () => {
+import CohortStatsRow from './CohortStatsRow';
+
+const CohortStatsBlock = (props) => {
+
+  const [ allStats ] = props;
+
+  const Rows = allStats.map((user: Array<any>, index: number) => {
+    <CohortStatsRow key={index} user={user} />
+  })
   return (
-    <div>CohortStatsBlock</div>
+    { Rows }
   )
 }
 
-export default CohortStatsBlock
+export default CohortStatsBlock;

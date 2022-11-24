@@ -22,7 +22,7 @@ const style = {
   };
 
 const UserAddActionModal = (props) => {
-  const [open, handleClose, handleSave] = props;
+  const [ open, handleClose, handleSave ] = props;
 
   return (
     <Modal
@@ -54,6 +54,6 @@ const UserAddActionModal = (props) => {
         </Box>
     </Modal>
   )
-}
+};
 
-export default UserAddActionModal
+export default UserAddActionModal;

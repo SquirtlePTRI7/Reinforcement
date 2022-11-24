@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const UserStatsBlock = () => {
+const UserStatsBlock = (props) => {
+  const [ userStats ] = props;
+
   return (
     <div>UserStatsBlock</div>
   )
-}
+};
 
-export default UserStatsBlock
+export default UserStatsBlock;
