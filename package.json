@@ -21,6 +21,7 @@
   "homepage": "https://github.com/SquirtlePTRI7/Reinforcement#readme",
   "dependencies": {
     "@mui/material": "^5.10.15",
+    "axios": "^1.2.0",
     "babel": "^6.23.0",
     "concurrently": "^7.6.0",
     "css-loader": "^6.7.2",

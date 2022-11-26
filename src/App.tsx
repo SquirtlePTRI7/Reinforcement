@@ -1,8 +1,15 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom';
+
+import UserContainer from './Containers/UserContainer';
+import CohortContainer from './Containers/CohortContainer';
 
 const App = () => {
   return (
-    <div>App!!!!!!!</div>
+    <Routes>
+      <Route path='/' element={<UserContainer />} />
+      <Route path='/leaderboard' element={<CohortContainer />} />
+    </Routes>
   )
 }
 

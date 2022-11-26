@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import { CohortRow } from '../../types';
+
 const CohortStatsBlock = (props) => {
 
   const [ cohortRows ] = props;
@@ -21,7 +23,7 @@ const CohortStatsBlock = (props) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {cohortRows.map((row: { key: number, username: string, score: number }) => (
+                {cohortRows.map((row: CohortRow) => (
                     <TableRow key={row.key} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                         <TableCell component='th' scope='row'>{row.username}</TableCell>
                         <TableCell align='right'>{row.score}</TableCell>

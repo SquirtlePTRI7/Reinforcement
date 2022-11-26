@@ -8,6 +8,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import { CardActionAreaProps } from '@mui/material';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -22,7 +24,7 @@ const style = {
   };
 
 const UserAddActionModal = (props) => {
-  const [ open, handleClose, handleSave ] = props;
+  const [ open, handleClose, handleSave, actionErr, actionErrHelp, resetActionErr ] = props;
 
   return (
     <Modal
@@ -36,18 +38,21 @@ const UserAddActionModal = (props) => {
                 Add a new action
             </Typography>
             {/* <Typography id='modal-modal-content' sx={{ mt:2 }}> */}
-                <FormControl>
+                <FormControl error={actionErr}>
                     <FormLabel id='action-types-label'>Select action type</FormLabel>
                     <RadioGroup
+                        id='action-selection'
                         aria-labelledby='action-types-label'
                         defaultValue=''
                         name='action-types'
+                        onChange={resetActionErr}
                     >
                         <FormControlLabel value='application' control={<Radio />} label='Application Submitted' />
                         <FormControlLabel value='phone' control={<Radio />} label='Phone Screen Completed' />
                         <FormControlLabel value='interview' control={<Radio />} label='Onsite/Video Interview Completed' />
                         <FormControlLabel value='offer' control={<Radio />} label='Job Offer Received' />
                     </RadioGroup>
+                    <FormHelperText>{actionErrHelp}</FormHelperText>
                 </FormControl>
             {/* </Typography> */}
             <span><Button id='save-button' onClick={handleSave} variant='contained'>Save</Button><Button id='cancel-button' onClick={handleClose} variant='outlined'>Cancel</Button></span>

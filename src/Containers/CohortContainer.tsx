@@ -2,6 +2,8 @@ import React from 'react';
 
 import CohortStatsBlock from '../Components/CohortStatsBlock';
 
+import { CohortRow } from '../../types';
+
 const CohortContainer = () => {
   const [cohortRows, setCohortRows] = React.useState([]);
 
@@ -12,9 +14,11 @@ const CohortContainer = () => {
       return { key, username, score }
     }
 
-    setCohortRows(data.map((profile: {username: string, score: number}, index: number) => {
-      createData(index, profile.username, profile.score)
-    }).sort((a,b) => a.profile.score - b.profile.score))
+    setCohortRows(data
+      .map((profile: {username: string, score: number}, index: number) => {
+        createData(index, profile.username, profile.score)
+      })
+      .sort((a: CohortRow, b: CohortRow) => a.score - b.score))
   
   }
 
