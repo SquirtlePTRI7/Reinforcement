@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "nodemon": "cross-env NODE_ENV=production ts-node server/server.ts",
+    "start": "cross-env NODE_ENV=production ts-node server/server.ts",
+    "nodemon": "cross-env NODE_ENV=development nodemon server/server.ts",
     "build": "webpack",
     "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon server/server.ts\""
   },
