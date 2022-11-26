@@ -5,12 +5,11 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT;
+const MongoURI = process.env.MongoURI;
 
 import { Application, Request, Response, NextFunction } from "express";
 
-mongoose.connect(
-  "mongodb+srv://squirtle:squirtle@reinforcementcluster.6apznup.mongodb.net/test"
-);
+mongoose.connect(MongoURI);
 const db = mongoose.connection;
 db.on("error", () => console.log("Error connecting to Database"));
 db.once("open", () => console.log("Connected to Database"));
