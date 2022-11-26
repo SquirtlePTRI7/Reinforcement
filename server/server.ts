@@ -20,6 +20,10 @@ const HTML_FILE: string = path.join(DIST_DIR, "index.html");
 // Serve static files
 app.use(express.static(DIST_DIR));
 app.use(express.static("../src/assets"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use("/users", require("./routes/userRoutes"));
 
 // Serve index.html
 app.get("/*", (req: Request, res: Response) => {

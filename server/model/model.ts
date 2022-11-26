@@ -1,35 +1,31 @@
 const mongoose = require("mongoose");
 
-const profileSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true
-    },
-    applicationSubmissions: {
-        type: Number,
-        default: 0,
-        required: true
-    },
-    interviews: {
-        type: Number,
-        default: 0,
-        required: true
-    },
-    phoneScreens: {
-        type: Number,
-        default: 0,
-        required: true
-    },
-    jobOffers: {
-        type: Number,
-        default: 0,
-        required: true
-    },
-    currentScore: {
-        type: Number,
-        default: 0,
-        required: true
-    }
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  applicationSubmissions: {
+    type: Number,
+    default: 0,
+  },
+  interviews: {
+    type: Number,
+    default: 0,
+  },
+  phoneScreens: {
+    type: Number,
+    default: 0,
+  },
+  jobOffers: {
+    type: Number,
+    default: 0,
+  },
+  currentScore: {
+    type: Number,
+    default: 0,
+  },
 });
 
-module.exports = mongoose.model("Profile", profileSchema);
+module.exports = mongoose.model("User", userSchema);
