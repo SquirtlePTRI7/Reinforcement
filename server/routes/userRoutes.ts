@@ -31,4 +31,14 @@ router.delete(
   }
 );
 
+router.patch(
+  "/add-action",
+  userController.addAction,
+  (req: Request, res: Response) => {
+    return res
+      .status(200)
+      .json({ message: 'action added' })
+  }
+)
+
 module.exports = router;

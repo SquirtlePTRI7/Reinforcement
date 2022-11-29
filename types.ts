@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 
-export type CohortRow = {
+export type LeaderboardRow = {
   key: number;
   username: string;
   score: number;
@@ -11,4 +11,5 @@ export type UserController = {
   getAllUsers?: RequestHandler;
   getOneUser?: RequestHandler;
   deleteUser?: RequestHandler;
+  addAction?: RequestHandler;
 };

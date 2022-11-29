@@ -7,11 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import { CohortRow } from '../../types';
+import { LeaderboardRow } from '../../types';
 
-const CohortStatsBlock = (props: any) => {
+const LeaderboardStatsBlock = (props: any) => {
 
-  const { cohortRows } = props;
+  const { leaderboardRows } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -23,7 +23,7 @@ const CohortStatsBlock = (props: any) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {cohortRows.map((row: CohortRow) => (
+                {leaderboardRows.map((row: LeaderboardRow) => (
                     <TableRow key={row.key} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                         <TableCell component='th' scope='row'>{row.username}</TableCell>
                         <TableCell align='right'>{row.score}</TableCell>
@@ -35,4 +35,4 @@ const CohortStatsBlock = (props: any) => {
   )
 }
 
-export default CohortStatsBlock;
+export default LeaderboardStatsBlock;

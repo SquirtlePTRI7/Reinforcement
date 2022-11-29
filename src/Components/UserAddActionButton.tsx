@@ -5,7 +5,7 @@ const UserAddActionButton = (props: any) => {
   const { handleOpen } = props;
 
   return (
-    <Button onClick={handleOpen}>New Action</Button>
+    <Button onClick={handleOpen} sx={{ marginBottom: 2 }}>New Action</Button>
   )
 };
 

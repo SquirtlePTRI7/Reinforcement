@@ -18,13 +18,12 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
 
 const UserAddActionModal = (props: any) => {
-  const { open, handleClose, handleSave, actionErr, actionErrHelp, resetActionErr } = props;
+  const { open, handleClose, handleSave, actionErr, actionErrHelp, handleActionSelect } = props;
 
   return (
     <Modal
@@ -37,25 +36,25 @@ const UserAddActionModal = (props: any) => {
             <Typography id='modal-modal-title' variant='h6' component='h2'>
                 Add a new action
             </Typography>
-            {/* <Typography id='modal-modal-content' sx={{ mt:2 }}> */}
-                <FormControl error={actionErr}>
+                <FormControl error={actionErr} id='modal-modal-content' sx={{ mt:2 }}>
                     <FormLabel id='action-types-label'>Select action type</FormLabel>
                     <RadioGroup
-                        id='action-selection'
                         aria-labelledby='action-types-label'
                         defaultValue=''
                         name='action-types'
-                        onChange={resetActionErr}
+                        onChange={handleActionSelect}
                     >
-                        <FormControlLabel value='application' control={<Radio />} label='Application Submitted' />
-                        <FormControlLabel value='phone' control={<Radio />} label='Phone Screen Completed' />
-                        <FormControlLabel value='interview' control={<Radio />} label='Onsite/Video Interview Completed' />
-                        <FormControlLabel value='offer' control={<Radio />} label='Job Offer Received' />
+                        <FormControlLabel value='applicationSubmissions' control={<Radio />} label='Application Submitted' />
+                        <FormControlLabel value='phoneScreens' control={<Radio />} label='Phone Screen Completed' />
+                        <FormControlLabel value='interviews' control={<Radio />} label='Onsite/Video Interview Completed' />
+                        <FormControlLabel value='jobOffers' control={<Radio />} label='Job Offer Received' />
                     </RadioGroup>
                     <FormHelperText>{actionErrHelp}</FormHelperText>
                 </FormControl>
-            {/* </Typography> */}
-            <span><Button id='save-button' onClick={handleSave} variant='contained'>Save</Button><Button id='cancel-button' onClick={handleClose} variant='outlined'>Cancel</Button></span>
+            <Box sx={{marginTop: 2}}>
+                <Button id='save-button' onClick={handleSave} variant='contained' sx={{ marginRight: 2 }}>Save</Button>
+                <Button id='cancel-button' onClick={handleClose} variant='outlined'>Cancel</Button>
+            </Box>
         </Box>
     </Modal>
   )

@@ -1,89 +1,125 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
 
 import UserAddActionModal from '../Components/UserAddActionModal';
 import UserAddActionButton from '../Components/UserAddActionButton';
 import UserStatsBlock from '../Components/UserStatsBlock';
 
-interface ActionInputElement extends HTMLInputElement {
-  value: 'application' | 'phone' | 'interview' | 'offer';
-}
-
 const UserContainer = () => {
-  const [userStats, setUserStats] = React.useState([]);
+  const [userStats, setUserStats] = React.useState({
+    username: null,
+    currentScore: null,
+    actions: [],
+  });
   const { id } = useParams();
 
+  // Invoked on initial page load to fetch user data from the database and use it to set state
   const getUserStats = async (): Promise<void> => {
-    // DATABASE REQUEST AND SETUSERSTATS
     await axios
       .get(`users/${id}`)
       .then((data) => {
-
         function createData(key: number, label: string, value: number) {
           return { key, label, value };
         }
 
-        const stats = [
-          createData(0, 'Applications', data.data.applicationSubmissions),
-          createData(1, 'Phone Screens', data.data.phoneScreens),
-          createData(2, 'Interviews', data.data.interviews),
-          createData(3, 'Job Offers', data.data.jobOffers),
-          createData(4, 'Current Score', data.data.currentScore),
-        ]
+        const stats = {
+          username: data.data.username,
+          currentScore: data.data.currentScore,
+          actions: [
+            createData(0, 'Applications', data.data.applicationSubmissions),
+            createData(1, 'Phone Screens', data.data.phoneScreens),
+            createData(2, 'Interviews', data.data.interviews),
+            createData(3, 'Job Offers', data.data.jobOffers),
+          ],
+        };
 
         setUserStats(stats);
       })
       .catch((err: Error) => err);
+  };
 
-    };
-    
-  // Get current user's stats on initial page load
   useEffect(() => {
-      getUserStats();
+    getUserStats();
   }, []);
 
-  // State for managing the action Radio button error text in AddActionModal
+  // State/functionality for managing the action Radio button selection and error text in AddActionModal
+  const [actionType, setActionType] = React.useState(null);
   const [actionErr, setActionErr] = React.useState(false);
   const [actionErrHelp, setActionErrHelp] = React.useState('');
   const resetActionErr = () => {
     setActionErr(false);
     setActionErrHelp('');
   };
-
-  // State for managing AddActionModal open/close
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
+  const handleActionSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setActionType((event.target as HTMLInputElement).value);
     resetActionErr();
   };
 
+  // State/functionality for managing AddActionModal open/close
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => {
+    setOpen(false);
+    setActionType(null);
+    resetActionErr();
+  };
+
+  // Invoked in UserAddActionModal when save button is clicked. Sends patch request to db and updates state for rerender
   const handleSave = async (): Promise<void> => {
-    const action: 'application' | 'phone' | 'interview' | 'offer' = (
-      document.getElementById('action-selection') as ActionInputElement
-    ).value;
+    const action: 'applicationSubmissions' | 'phoneScreens' | 'interviews' | 'jobOffers' = actionType;
     const actionValues = {
-      application: 1,
-      phone: 5,
-      interview: 10,
-      offer: 20,
+      applicationSubmissions: 1,
+      phoneScreens: 5,
+      interviews: 10,
+      jobOffers: 20,
     };
     const body = {
+      username: id,
       action,
       value: actionValues[action],
     };
 
     if (action) {
       await axios
-        .post('user/add-action', body, {
+        .patch('users/add-action', body, {
           headers: {
             'Content-Type': 'application/json',
           },
         })
         .then((data) => {
+          setUserStats({
+            username: userStats.username,
+            currentScore: userStats.currentScore + actionValues[action],
+            actions: [
+              {
+                key: 0,
+                label: 'Applications',
+                value:
+                  userStats.actions[0].value + (action === 'applicationSubmissions' ? 1 : 0),
+              },
+              {
+                key: 1,
+                label: 'Phone Screens',
+                value:
+                  userStats.actions[1].value + (action === 'phoneScreens' ? 1 : 0),
+              },
+              {
+                key: 2,
+                label: 'Interviews',
+                value:
+                  userStats.actions[2].value + (action === 'interviews' ? 1 : 0),
+              },
+              {
+                key: 3,
+                label: 'Job Offers',
+                value:
+                  userStats.actions[3].value + (action === 'jobOffers' ? 1 : 0),
+              },
+            ],
+          });
           handleClose();
-          // UPDATE USERSTATS
         })
         .catch((err: Error) => console.log(err));
     } else {
@@ -94,13 +130,16 @@ const UserContainer = () => {
 
   return (
     <div>
+      <Typography variant="h2" component="h2">
+        {userStats.username}
+      </Typography>
       <UserAddActionModal
         open={open}
         handleClose={handleClose}
         handleSave={handleSave}
         actionErr={actionErr}
         actionErrHelp={actionErrHelp}
-        resetActionErr={resetActionErr}
+        handleActionSelect={handleActionSelect}
       />
       <UserAddActionButton handleOpen={handleOpen} />
       <UserStatsBlock userStats={userStats} />
