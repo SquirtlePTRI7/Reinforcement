@@ -1,30 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Typography from '@mui/material/Typography';
 
 import LeaderboardStatsBlock from '../Components/LeaderboardStatsBlock';
 
 import { LeaderboardRow } from '../../types';
+import axios from 'axios';
 
 const LeaderboardContainer = () => {
-  const [leaderboardRows, setLeaderboardRows] = React.useState([]);
+  const [leaderboardRows, setLeaderboardRows] = React.useState([{key: null, username: null, score: null}]);
 
-  const getLeaderboardStats = () => {
-    // DATABASE REQUEST AND SETALLSTATS
-
+  // Invoked on initial page load to fetch all users' data from the database and use it to set state
+  const getLeaderboardStats = async () => {
     function createData (key: number, username: string, score: number){
       return { key, username, score }
     }
 
-    // setLeaderboardRows(data
-    //   .map((profile: {username: string, score: number}, index: number) => {
-    //     createData(index, profile.username, profile.score)
-    //   })
-    //   .sort((a: LeaderboardRow, b: LeaderboardRow) => a.score - b.score))
-  
+    await axios
+      .get('/users')
+      .then(data => {
+        setLeaderboardRows(data.data
+          .map((profile: {username: string, currentScore: number}, index: number) => {
+            return createData(index, profile.username, profile.currentScore)
+          })
+          .sort((a: LeaderboardRow, b: LeaderboardRow) => b.score - a.score));
+        })
+      .catch()
+
   }
+
+  useEffect(() => {
+    getLeaderboardStats();
+  }, [])
 
   return (
     <div>
-      <LeaderboardStatsBlock allStats={leaderboardRows} />
+      <Typography variant="h2" component="h2">
+        Leaderboard
+      </Typography>
+      <LeaderboardStatsBlock leaderboardRows={leaderboardRows} />
     </div>
   )
 };
