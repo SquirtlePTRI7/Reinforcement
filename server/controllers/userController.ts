@@ -54,6 +54,25 @@ userController.getOneUser = async (req, res, next) => {
   }
 };
 
+userController.updateScore = async (req, res, next) => {
+  if (req.body.applicationSubmissions) {
+    res.locals.user.applicationSubmissions = res.locals.user.applicationSubmissions + req.body.applicationSubmissions
+    res.locals.user.currentScore = res.locals.user.currentScore + req.body.applicationSubmissions
+  }
+  // add more ifs
+  try {
+    const updatedUser = await res.locals.user.save();
+    res.locals.updatedUser = updatedUser;
+    console.log(res.locals.updatedUser)
+    return next()
+  } catch (err) {
+    return next({
+      message: "unable to PATCH one user",
+      log: "unable to PATCH one user " + err,
+    });
+  }
+}
+
 userController.deleteUser = async (req, res, next) => {
   try {
     await res.locals.user.remove();
