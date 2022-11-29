@@ -14,11 +14,11 @@ const CohortContainer = () => {
       return { key, username, score }
     }
 
-    setCohortRows(data
-      .map((profile: {username: string, score: number}, index: number) => {
-        createData(index, profile.username, profile.score)
-      })
-      .sort((a: CohortRow, b: CohortRow) => a.score - b.score))
+    // setCohortRows(data
+    //   .map((profile: {username: string, score: number}, index: number) => {
+    //     createData(index, profile.username, profile.score)
+    //   })
+    //   .sort((a: CohortRow, b: CohortRow) => a.score - b.score))
   
   }
 

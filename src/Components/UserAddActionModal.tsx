@@ -23,8 +23,8 @@ const style = {
     p: 4,
   };
 
-const UserAddActionModal = (props) => {
-  const [ open, handleClose, handleSave, actionErr, actionErrHelp, resetActionErr ] = props;
+const UserAddActionModal = (props: any) => {
+  const { open, handleClose, handleSave, actionErr, actionErrHelp, resetActionErr } = props;
 
   return (
     <Modal

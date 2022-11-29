@@ -9,9 +9,9 @@ import Paper from '@mui/material/Paper';
 
 import { CohortRow } from '../../types';
 
-const CohortStatsBlock = (props) => {
+const CohortStatsBlock = (props: any) => {
 
-  const [ cohortRows ] = props;
+  const { cohortRows } = props;
 
   return (
     <TableContainer component={Paper}>

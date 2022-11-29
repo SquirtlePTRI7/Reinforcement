@@ -36,6 +36,7 @@ userController.getAllUsers = async (req, res, next) => {
 
 userController.getOneUser = async (req, res, next) => {
   try {
+    console.log('req.params.username ', req.params.username)
     const user = await User.findOne({ username: req.params.username });
     if (user === null) {
       console.log("Cannot find user");
@@ -44,6 +45,7 @@ userController.getOneUser = async (req, res, next) => {
         .json({ message: "Cannot find user", log: "Cannot find user" });
     } else {
       res.locals.user = user;
+      console.log('res.locals.user ', res.locals.user)
       return next();
     }
   } catch (err) {
