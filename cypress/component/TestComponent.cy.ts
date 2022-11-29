@@ -14,7 +14,7 @@
 // #API Tests
 it('tests /users endpoint for 200 status', () => {
   cy.request({
-    url: 'localhost:3000/users',
+    url: 'https://localhost:3000/users',
     method: 'GET',
   })
     .then((res) => {
