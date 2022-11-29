@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "nodemon": "cross-env NODE_ENV=production ts-node server/server.ts",
     "build": "webpack",
-    "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon server/server.ts\""
+    "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon server/server.js\""
   },
   "repository": {
     "type": "git",
@@ -25,8 +25,11 @@
     "css-loader": "^6.7.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "mongoose": "^6.7.3",
     "nodemon": "^2.0.20",
+    "passport": "^0.6.0",
+    "passport-github": "^1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.4.3",
