@@ -20,10 +20,10 @@ router.get(
   }
 );
 
-router.patch("/:username", userController.getOneUser, userController.updateScore, (req: Request, res: Response) => {
-  console.log('updated yay!')
-  return res.status(200).json(res.locals.updatedUser)
-})
+// router.patch("/:username", userController.getOneUser, userController.updateScore, (req: Request, res: Response) => {
+//   console.log('updated yay!')
+//   return res.status(200).json(res.locals.updatedUser)
+// })
 
 router.delete(
   "/:username",
@@ -35,5 +35,15 @@ router.delete(
       .json({ message: res.locals.user.username + " has been deleted" });
   }
 );
+
+router.patch(
+  "/add-action",
+  userController.addAction,
+  (req: Request, res: Response) => {
+    return res
+      .status(200)
+      .json({ message: 'action added' })
+  }
+)
 
 module.exports = router;

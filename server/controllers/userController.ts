@@ -4,7 +4,7 @@ import { UserController } from "../../types";
 
 const userController: UserController = {};
 
-userController.createUser = async (req, res, next) => {
+userController.createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const user = new User({
     username: req.body.username,
   });
@@ -20,7 +20,7 @@ userController.createUser = async (req, res, next) => {
   }
 };
 
-userController.getAllUsers = async (req, res, next) => {
+userController.getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   console.log("getting all users...");
   try {
     const users = await User.find();
@@ -34,8 +34,9 @@ userController.getAllUsers = async (req, res, next) => {
   }
 };
 
-userController.getOneUser = async (req, res, next) => {
+userController.getOneUser = async (req: Request, res: Response, next: NextFunction): Promise<void | Response<any, Record<string, any>>> => {
   try {
+    console.log('req.params.username ', req.params.username)
     const user = await User.findOne({ username: req.params.username });
     if (user === null) {
       console.log("Cannot find user");
@@ -44,6 +45,7 @@ userController.getOneUser = async (req, res, next) => {
         .json({ message: "Cannot find user", log: "Cannot find user" });
     } else {
       res.locals.user = user;
+      console.log('res.locals.user ', res.locals.user)
       return next();
     }
   } catch (err) {
@@ -54,26 +56,26 @@ userController.getOneUser = async (req, res, next) => {
   }
 };
 
-userController.updateScore = async (req, res, next) => {
-  if (req.body.applicationSubmissions) {
-    res.locals.user.applicationSubmissions = res.locals.user.applicationSubmissions + req.body.applicationSubmissions
-    res.locals.user.currentScore = res.locals.user.currentScore + req.body.applicationSubmissions
-  }
-  // add more ifs
-  try {
-    const updatedUser = await res.locals.user.save();
-    res.locals.updatedUser = updatedUser;
-    console.log(res.locals.updatedUser)
-    return next()
-  } catch (err) {
-    return next({
-      message: "unable to PATCH one user",
-      log: "unable to PATCH one user " + err,
-    });
-  }
-}
+// userController.updateScore = async (req, res, next) => {
+//   if (req.body.applicationSubmissions) {
+//     res.locals.user.applicationSubmissions = res.locals.user.applicationSubmissions + req.body.applicationSubmissions
+//     res.locals.user.currentScore = res.locals.user.currentScore + req.body.applicationSubmissions
+//   }
+//   // add more ifs
+//   try {
+//     const updatedUser = await res.locals.user.save();
+//     res.locals.updatedUser = updatedUser;
+//     console.log(res.locals.updatedUser)
+//     return next()
+//   } catch (err) {
+//     return next({
+//       message: "unable to PATCH one user",
+//       log: "unable to PATCH one user " + err,
+//     });
+//   }
+// }
 
-userController.deleteUser = async (req, res, next) => {
+userController.deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     await res.locals.user.remove();
     return next();
@@ -84,4 +86,22 @@ userController.deleteUser = async (req, res, next) => {
     });
   }
 };
+
+userController.addAction = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+
+  const filter = { username: req.body.username };
+  const update = { $inc: {[req.body.action]:1, currentScore:req.body.value} };
+
+  try {
+    await User.findOneAndUpdate(filter, update);
+    return next();
+  } catch (err) {
+    return next({
+      message: "unable to UPDATE user",
+      log: "unable to UPDATE user " + err,
+    });
+  }
+
+}
+
 module.exports = userController;
