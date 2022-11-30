@@ -5,4 +5,5 @@ export type UserController = {
   getAllUsers?: RequestHandler;
   getOneUser?: RequestHandler;
   deleteUser?: RequestHandler;
+  updateScore?: RequestHandler;
 };
