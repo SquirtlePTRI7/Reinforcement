@@ -20,10 +20,10 @@ router.get(
   }
 );
 
-router.patch("/:username", userController.getOneUser, userController.updateScore, (req: Request, res: Response) => {
-  console.log('updated yay!')
-  return res.status(200).json(res.locals.updatedUser)
-})
+// router.patch("/:username", userController.getOneUser, userController.updateScore, (req: Request, res: Response) => {
+//   console.log('updated yay!')
+//   return res.status(200).json(res.locals.updatedUser)
+// })
 
 router.delete(
   "/:username",
