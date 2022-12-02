@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=production ts-node server/server.js",
-    "nodemon": "cross-env NODE_ENV=development nodemon server/server.js",
+    "start": "cross-env NODE_ENV=production ts-node server/server.ts",
+    "nodemon": "cross-env NODE_ENV=development nodemon server/server.ts",
     "build": "webpack",
-    "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon server/server.js\""
+    "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon server/server.ts\""
   },
   "repository": {
     "type": "git",
